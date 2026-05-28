@@ -1,1 +1,0 @@
-# hunt_the_wumpus_shiv

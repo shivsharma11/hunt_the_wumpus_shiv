@@ -14,6 +14,7 @@ class Cave:
     def get_description(self):
         """Gets cave description"""
         return self.description
+    
     def set_name(self, cave_name):
         """Sets cave name"""
         self.name = cave_name
@@ -25,6 +26,7 @@ class Cave:
     def set_link_caves(self, cave_to_link, direction):
         """Sets cave linking"""
         self.linked_caves[direction] = cave_to_link
+    
     def get_link_caves(self):
         """Gets cave links"""
         for direction, cave in self.linked_caves.items():
@@ -37,6 +39,7 @@ class Cave:
         else:
             print("You cant go that way")
             return self
+    
     def describe(self):
         """Organises outputs for the main loop"""
         print(self.description)
