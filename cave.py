@@ -6,6 +6,7 @@ class Cave:
         self.name = cave_name
         self.description = None
         self.linked_caves = {}
+        self.character = None
 
     def set_description(self, cave_description):
         """Sets cave description"""
@@ -31,6 +32,15 @@ class Cave:
         """Gets cave links"""
         for direction, cave in self.linked_caves.items():
             print("The " + cave.get_name() + " is " + direction)
+
+    def set_character(self, new_character):
+        '''Sets characters in caves'''
+        self.character = new_character
+
+    def get_character(self):
+        '''Returns character in cave'''
+        return self.character
+
 
     def move(self, direction):
         """Allows player to move between caves"""
