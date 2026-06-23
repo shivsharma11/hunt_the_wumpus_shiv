@@ -1,62 +1,65 @@
-from character import Character, Enemy 
-from cave import Cave 
+from character import Character, Teacher
+from cave import Classroom
 
 dead = False
-# Instantiate the cave objects
-cavern = Cave("Cavern") 
-grotto = Cave("Grotto") 
-dungeon = Cave("Dungeon") 
 
-# Set the cave descriptions
-cavern.set_description("A dark and dirty cavern") 
-grotto.set_description("A small cave with ancient markings") 
-dungeon.set_description("A large cave with a rack") 
+# Create caves
+cavern = Classroom("Cavern")
+grotto = Classroom("Grotto")
+dungeon = Classroom("Dungeon")
 
-# Set links between caves 
-cavern.set_link_caves(dungeon, "south") 
-dungeon.set_link_caves(cavern, "north") 
-dungeon.set_link_caves(grotto, "west") 
-grotto.set_link_caves(dungeon, "east") 
+# Descriptions
+cavern.set_description("A dark and dirty cavern")
+grotto.set_description("A small cave with ancient markings")
+dungeon.set_description("A large cave with a rack")
 
-# Instantiate Enemy and add to cave
-harry = Enemy("Harry", "A hairy, smelly wumpus") 
-dungeon.set_character(harry) 
-harry.set_conversation("Come closer... I can't see you.") 
+# Links
+cavern.set_link_classroom(dungeon, "south")
+dungeon.set_link_classroom(cavern, "north")
+dungeon.set_link_classroom(grotto, "west")
+grotto.set_link_classroom(dungeon, "east")
+
+# Enemy
+harry = Teacher("Harry", "A hairy, smelly wumpus")
+dungeon.set_character(harry)
+
+harry.set_conversation("Come closer... I can't see you.")
 harry.set_weakness("aura")
 
-# Main game loop
-current_cave = cavern 
+current_cave = cavern
 
-while dead == False:
-    print("\n")
+while not dead:
+
+    print()
     current_cave.describe()
-    
+
     inhabitant = current_cave.get_character()
-    if inhabitant is not None:
+
+    if inhabitant:
         inhabitant.describe()
-        
+
     command = input("> ").lower()
-    
-    if command in ["north", "east", "south", "west"]:
+
+    if command in ["north", "south", "east", "west"]:
         current_cave = current_cave.move(command)
-        
+
     elif command == "talk":
-        if inhabitant is not None:
+
+        if inhabitant:
             inhabitant.talk()
         else:
-            print("There is nobody here to talk to.")
-            
+            print("There is nobody here.")
+
     elif command == "fight":
-        if inhabitant is not None and isinstance(inhabitant, Enemy):
+        if inhabitant and isinstance(inhabitant, Teacher):
             fight_with = input("What will you fight with? ")
-            if inhabitant.fight(fight_with) is True:
-                print("You won the fight!")
+            if inhabitant.fight(fight_with):
+                print("You won!")
                 current_cave.set_character(None)
             else:
-                print("Scurry home, you lost the battle.")
                 print("Game over")
                 dead = True
         else:
-            print("You lost the fight.")
+            print("There is nobody to fight.")
     else:
-        print("There is nobody to fight with.")
+        print("Invalid command.")

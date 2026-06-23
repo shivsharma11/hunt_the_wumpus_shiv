@@ -1,56 +1,56 @@
-"""Cave class"""
-class Cave:
-    """Defines the cave class"""
-    def __init__(self, cave_name):
-        """Cave class attributes"""
-        self.name = cave_name
+class Classroom:
+    """Defines the classroom class"""
+
+    def __init__(self, classroom_name):
+        """Classroom attributes"""
+        self.name = classroom_name
         self.description = None
-        self.linked_caves = {}
+        self.linked_classrooms = {}
         self.character = None
 
-    def set_description(self, cave_description):
-        """Sets cave description"""
-        self.description = cave_description
+    def set_description(self, classroom_description):
+        """Sets classroom description"""
+        self.description = classroom_description
 
     def get_description(self):
-        """Gets cave description"""
+        """Gets classroom description"""
         return self.description
     
-    def set_name(self, cave_name):
-        """Sets cave name"""
-        self.name = cave_name
+    def set_name(self, classroom_name):
+        """Sets classroom name"""
+        self.name = classroom_name
 
     def get_name(self):
-        """Gets cave name"""
+        """Gets classroom name"""
         return self.name
 
-    def set_link_caves(self, cave_to_link, direction):
-        """Sets cave linking"""
-        self.linked_caves[direction] = cave_to_link
+    def set_link_classroom(self, classroom_to_link, direction):
+        """Links this classroom to another classroom"""
+        self.linked_classrooms[direction] = classroom_to_link
     
-    def get_link_caves(self):
-        """Gets cave links"""
-        for direction, cave in self.linked_caves.items():
-            print("The " + cave.get_name() + " is " + direction)
+    def get_link_classroom(self):
+        """Displays linked classrooms"""
+        for direction, classroom in self.linked_classrooms.items():
+            print("The " + classroom.get_name() + " is " + direction)
 
     def set_character(self, new_character):
-        '''Sets characters in caves'''
+        """Places a character in the classroom"""
         self.character = new_character
 
     def get_character(self):
-        '''Returns character in cave'''
+        """Returns the character in the classroom"""
         return self.character
 
-
     def move(self, direction):
-        """Allows player to move between caves"""
-        if direction in self.linked_caves:
-            return self.linked_caves[direction]
+        """Allows player to move between classrooms"""
+        if direction in self.linked_classrooms:
+            return self.linked_classrooms[direction]
         else:
-            print("You cant go that way")
+            print("You can't go that way")
             return self
     
     def describe(self):
         """Organises outputs for the main loop"""
         print(self.description)
-        self.get_link_caves()
+        self.get_link_classroom()
+
