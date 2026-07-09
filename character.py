@@ -43,6 +43,7 @@ class Student(Character):
         self.strength = strength
         self.weakness = weakness
         self.intelligence = intelligence
+        self.inventory = []
 
         # subject points
         self.maths = 0
@@ -109,6 +110,30 @@ class Student(Character):
         if total >= 50:
             self.strength += 1
             print("level up! +1 strength")
+            
+    def add_item(self,item):
+        self.inventory.append(item)
+        print("Picked up", item.get_name())
+    def has_item(self,item_name):
+
+        for item in self.inventory:
+            if item.get_name().lower() == item_name.lower():
+                return True
+
+        return False
+
+
+def show_inventory(self):
+
+    print("\nInventory")
+
+    if len(self.inventory)==0:
+        print("Empty")
+        return
+
+    for item in self.inventory:
+        print("-",item.get_name())
+
 
 
 class Teacher(Character):
@@ -125,23 +150,25 @@ class Teacher(Character):
 
     def fight(self, combat_item):
         if combat_item == self.weakness:
-            print(
-                "you defeated "
-                + self.name
-                + " using "
-                + combat_item
-            )
+            print("You defeated " + self.name + " using " + combat_item)
             return True
-
         else:
-            print(
-                self.name
-                + " gave you detention. you lose."
-            )
+            print(self.name + " gave you detention. You lose.")
             return False
 
 
 class EvilTeacher(Teacher):
-    '''special teacher subclass'''
+    '''special evil teacher subclass'''
     def __init__(self, char_name, char_description):
         super().__init__(char_name, char_description)
+
+    def talk(self):
+        print("[" + self.name + " snarls]: " + self.conversation)
+
+    def fight(self, combat_item):
+        if combat_item == self.weakness:
+            print("You defeated the evil " + self.name + " using " + combat_item)
+            return True
+        else:
+            print(self.name + " unleashes evil homework magic. You lose.")
+            return False
