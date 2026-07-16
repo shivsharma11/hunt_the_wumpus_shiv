@@ -1,34 +1,53 @@
 from character import Character, Teacher, EvilTeacher, Student
-from item import Item
 from cave import Classroom
+from item import Item
 
 dead = False
 
-#ITEMS
+# =========================================================
+# ITEMS
+# =========================================================
 
-calculator = Item("calculator", "A scientific calculator.")
+calculator = Item(
+    "calculator",
+    "A scientific calculator."
+)
 
-dictionary = Item("dictionary", "A giant Oxford dictionary.")
+dictionary = Item(
+    "dictionary",
+    "A giant Oxford dictionary."
+)
 
-fantasy_book = Item("fantasy book", "A magical fantasy novel.")
+fantasy_book = Item(
+    "fantasy book",
+    "A magical fantasy novel."
+)
 
-pylint = Item("pylint", "A code analysis program.")
+pylint = Item(
+    "pylint",
+    "A code analysis program."
+)
 
-# ---------------------------------------------------------
-# ROOM CREATION 
-# ---------------------------------------------------------
+school_key = Item(
+    "school key",
+    "A rusty key that looks important."
+)
+
+# =========================================================
+# ROOM CREATION
+# =========================================================
 
 entrance = Classroom("Entrance")
 
-hall1 = Classroom("Hall")
-hall2 = Classroom("Hall")
-hall3 = Classroom("Hall")
-hall4 = Classroom("Hall")
-hall5 = Classroom("Hall")
-hall6 = Classroom("Hall")
-hall7 = Classroom("Hall")
-hall8 = Classroom("Hall")
-hall9 = Classroom("Hall")
+hall1 = Classroom("Hall 1")
+hall2 = Classroom("Hall 2")
+hall3 = Classroom("Hall 3")
+hall4 = Classroom("Hall 4")
+hall5 = Classroom("Hall 5")
+hall6 = Classroom("Hall 6")
+hall7 = Classroom("Hall 7")
+hall8 = Classroom("Hall 8")
+hall9 = Classroom("Hall 9")
 
 principal_office = Classroom("Principal's Office")
 exit_room = Classroom("Exit")
@@ -45,100 +64,182 @@ physics = Classroom("Physics")
 chemistry = Classroom("Chemistry")
 
 math_classroom = Classroom("Mathematics")
-m_faculty1 = Classroom("M. Faculty 1")
-m_faculty2 = Classroom("M. Faculty 2")
+math_faculty = Classroom("Math Faculty")
 
 english_classroom = Classroom("English")
+english_office = Classroom("English Office")
+
 hsie = Classroom("HSIE")
 pe1 = Classroom("PE 1")
 pe2 = Classroom("PE 2")
 
-evil_english1 = Classroom("English")
-
-library.set_item(dictionary)
+# =========================================================
+# ITEM PLACEMENT
+# =========================================================
 
 canteen.set_item(calculator)
-
+library.set_item(dictionary)
 biology.set_item(fantasy_book)
-
 computer_lab.set_item(pylint)
+principal_office.set_item(school_key)
 
-# ---------------------------------------------------------
+# =========================================================
 # ROOM DESCRIPTIONS
-# ---------------------------------------------------------
+# =========================================================
 
-entrance.set_description("...enter at your own risk")
-hall1.set_description("A busy hall full of students.")
-hall2.set_description("A busy hall full of students.")
-hall3.set_description("A busy hall full of students.")
-hall4.set_description("A busy hall full of students.")
-hall5.set_description("A busy hall full of students.")
-hall6.set_description("A busy hall full of students.")
-hall7.set_description("A busy hall full of students.")
-hall8.set_description("A busy hall full of students.")
-hall9.set_description("A busy hall full of students.")
+entrance.set_description(
+    "The school entrance. Once you walk in, there is no turning back."
+)
 
-principal_office.set_description("The principal's office. You are intimidated by his aura.")
-exit_room.set_description("FREEDOM. You have escaped the horrors of this highschool.")
+hall1.set_description(
+    "Students rush past you carrying backpacks."
+)
 
-cafe.set_description("A cozy cafe with snacks.")
-canteen.set_description("A noisy canteen full of chatter.")
-library.set_description("A quiet library full of books.")
-oval.set_description("A large oval outside.")
-detention.set_description("A dark room for troublemakers.")
+hall2.set_description(
+    "A crowded hallway filled with lockers."
+)
 
-computer_lab.set_description("A glowing room full of computers.")
-biology.set_description("Biology lab with specimens.")
-physics.set_description("Physics lab with equipment.")
-chemistry.set_description("Chemistry lab with chemicals.")
+hall3.set_description(
+    "A quieter hallway with classroom doors."
+)
 
-math_classroom.set_description("The main mathematics classroom.")
-m_faculty1.set_description("Math Faculty Office 1.")
-m_faculty2.set_description("Math Faculty Office 2.")
+hall4.set_description(
+    "The science wing begins here."
+)
 
-english_classroom.set_description("The main English classroom.")
-hsie.set_description("Human Society and Its Environment.")
-pe1.set_description("Physical Education Area 1.")
-pe2.set_description("Physical Education Area 2.")
+hall5.set_description(
+    "The smell of food drifts through the hall."
+)
 
-# ---------------------------------------------------------
-# ROOM LINKS 
-# ---------------------------------------------------------
+hall6.set_description(
+    "A peaceful hallway beside the library."
+)
 
-#entering the school (initial spawnpoint) 
+hall7.set_description(
+    "An empty hallway."
+)
+
+hall8.set_description(
+    "A hallway lined with school trophies."
+)
+
+hall9.set_description(
+    "A silent hallway leading towards the exit."
+)
+
+principal_office.set_description(
+    "The Principal's office. His intimidating aura fills the room."
+)
+
+exit_room.set_description(
+    "You've escaped Quakers Hill High School!"
+)
+
+cafe.set_description(
+    "A cosy café selling snacks and drinks."
+)
+
+canteen.set_description(
+    "Students are eating lunch."
+)
+
+library.set_description(
+    "Rows upon rows of books fill the shelves."
+)
+
+oval.set_description(
+    "A huge grassy oval."
+)
+
+detention.set_description(
+    "A depressing room filled with desks."
+)
+
+computer_lab.set_description(
+    "Rows of glowing computers."
+)
+
+biology.set_description(
+    "Skeletons and preserved specimens surround you."
+)
+
+physics.set_description(
+    "Physics equipment is scattered everywhere."
+)
+
+chemistry.set_description(
+    "Beakers and chemicals cover the benches."
+)
+
+math_classroom.set_description(
+    "Equations cover every whiteboard."
+)
+
+math_faculty.set_description(
+    "The Maths teachers prepare tomorrow's exam."
+)
+
+english_classroom.set_description(
+    "Students analyse Shakespeare."
+)
+
+english_office.set_description(
+    "Stacks of essays cover every desk."
+)
+
+hsie.set_description(
+    "History and Geography posters line the walls."
+)
+
+pe1.set_description(
+    "Sports equipment fills the room."
+)
+
+pe2.set_description(
+    "Indoor courts echo with bouncing basketballs."
+)
+
+# =========================================================
+# ROOM LINKS
+# =========================================================
+
+# Entrance
 entrance.set_link_classroom(hall1, "west")
 
-# Hall main connections
+# ---------------- Hall 1 ----------------
 
-#HALL 1
+hall1.set_link_classroom(entrance, "east")
 hall1.set_link_classroom(math_classroom, "north")
 hall1.set_link_classroom(english_classroom, "south")
 hall1.set_link_classroom(hall2, "southwest")
-hall1.set_link_classroom(entrance, "east")
 
-#HALL 2
-hall2.set_link_classroom(hsie, "west")
-hall2.set_link_classroom(evil_english1, "east")
-hall2.set_link_classroom(oval, "south")
-hall2.set_link_classroom(oval, "southwest")
+# ---------------- Hall 2 ----------------
+
 hall2.set_link_classroom(hall1, "northeast")
 hall2.set_link_classroom(hall3, "north")
 hall2.set_link_classroom(hall4, "northwest")
+hall2.set_link_classroom(hsie, "west")
+hall2.set_link_classroom(english_office, "east")
+hall2.set_link_classroom(oval, "south")
+hall2.set_link_classroom(oval, "southwest")
 
-#HALL3
-hall3.set_link_classroom(hall1, "east")
+# ---------------- Hall 3 ----------------
+
 hall3.set_link_classroom(hall2, "south")
-hall3.set_link_classroom (hall4, "west")
+hall3.set_link_classroom(hall4, "west")
+hall3.set_link_classroom(hall1, "east")
 
-#HALL 4
+# ---------------- Hall 4 ----------------
+
 hall4.set_link_classroom(chemistry, "north")
-hall4.set_link_classroom(hsie, "south")
-hall4.set_link_classroom(pe1, "southwest")
 hall4.set_link_classroom(physics, "northwest")
 hall4.set_link_classroom(hall5, "west")
 hall4.set_link_classroom(hall2, "southeast")
+hall4.set_link_classroom(hsie, "south")
+hall4.set_link_classroom(pe1, "southwest")
 
-#HALL 5
+# ---------------- Hall 5 ----------------
+
 hall5.set_link_classroom(physics, "north")
 hall5.set_link_classroom(biology, "northwest")
 hall5.set_link_classroom(canteen, "southwest")
@@ -147,119 +248,188 @@ hall5.set_link_classroom(hall6, "west")
 hall5.set_link_classroom(hall4, "east")
 hall5.set_link_classroom(hsie, "southeast")
 
-#HALL 6
+# ---------------- Hall 6 ----------------
+
 hall6.set_link_classroom(hall5, "east")
 hall6.set_link_classroom(biology, "north")
-hall6.set_link_classroom(library, "west")
 hall6.set_link_classroom(computer_lab, "northwest")
 hall6.set_link_classroom(physics, "northeast")
+hall6.set_link_classroom(library, "west")
 hall6.set_link_classroom(canteen, "south")
 hall6.set_link_classroom(pe1, "southwest")
 
+# ---------------- Maths ----------------
 
-#CLASSROOMS & MISC. 
-
-#MATH WING
-math_classroom.set_link_classroom(m_faculty1, "north")
 math_classroom.set_link_classroom(hall1, "south")
-m_faculty1.set_link_classroom(math_classroom, "south")
+math_classroom.set_link_classroom(math_faculty, "north")
 
-#ENGLISH WING
+math_faculty.set_link_classroom(math_classroom, "south")
+
+# ---------------- English ----------------
+
 english_classroom.set_link_classroom(hall1, "north")
 english_classroom.set_link_classroom(hall2, "west")
-english_classroom.set_link_classroom(evil_english1, "south")
-evil_english1.set_link_classroom(english_classroom, "north")
-evil_english1.set_link_classroom(hall2, "northwest")
+english_classroom.set_link_classroom(english_office, "south")
 
-#SCIENCE WING
+english_office.set_link_classroom(english_classroom, "north")
+english_office.set_link_classroom(hall2, "northwest")
+
+# ---------------- Science ----------------
+
 chemistry.set_link_classroom(hall4, "south")
 chemistry.set_link_classroom(physics, "west")
 chemistry.set_link_classroom(hall5, "southwest")
-chemistry.set_link_classroom(hall3, "southeast")
 
 physics.set_link_classroom(chemistry, "east")
-physics.set_link_classroom(hall4, "southeast")
 physics.set_link_classroom(hall5, "south")
 physics.set_link_classroom(hall6, "southwest")
 physics.set_link_classroom(biology, "west")
 
 biology.set_link_classroom(computer_lab, "west")
-biology.set_link_classroom(library, "southwest")
 biology.set_link_classroom(physics, "east")
 biology.set_link_classroom(hall6, "south")
-biology.set_link_classroom(hall5, "southeast")
+biology.set_link_classroom(library, "southwest")
 
+computer_lab.set_link_classroom(biology, "east")
 
-#HSIE AND PE WING
+# ---------------- HSIE / PE ----------------
+
 hsie.set_link_classroom(pe1, "west")
 hsie.set_link_classroom(hall4, "north")
 hsie.set_link_classroom(hall5, "northwest")
-hsie.set_link_classroom(hall3, "northeast")
 hsie.set_link_classroom(hall2, "east")
 
 pe1.set_link_classroom(hsie, "east")
-pe1.set_link_classroom(oval, "south")
 pe1.set_link_classroom(canteen, "west")
-pe1.set_link_classroom(hall6, "northwest")
+pe1.set_link_classroom(oval, "south")
 pe1.set_link_classroom(hall5, "north")
-pe1.set_link_classroom(hall4, "northeast")
+pe1.set_link_classroom(hall6, "northwest")
 
-#OFFICE WING
-#add the links if you can't think of a way to add a maze/tool finding quest thing
+# =========================================================
+# FRIENDLY STUDENTS
+# =========================================================
+
+ryan = Character(
+    "Ryan",
+    "A sleepy Year 11 student carrying far too many maths books."
+)
+ryan.set_conversation(
+    "Mr Algebra never goes anywhere without talking about calculus..."
+)
+hall3.set_character(ryan)
 
 
-# ---------------------------------------------------------
-# TEACHERS (evil + normal)
-# ---------------------------------------------------------
+emily = Character(
+    "Emily",
+    "A friendly student reading a fantasy novel."
+)
+emily.set_conversation(
+    "I left my favourite fantasy book in the Biology lab."
+)
+hall6.set_character(emily)
 
 
-player = Student("Shivansh", "A stressed Year 11 student.")
-current_cave = entrance
-player.add_item("calculator")
-player.add_item("dictionary")
+liam = Character(
+    "Liam",
+    "A nervous Year 11 student."
+)
+liam.set_conversation(
+    "I heard Ms Grammar hates dictionaries..."
+)
+hall2.set_character(liam)
 
-# Principal (evil)
-principal = EvilTeacher("Prin C. Pal", "The principal of the school")
-principal.set_conversation("You dare enter my domain?")
-principal.set_weakness("aura")
+
+ava = Character(
+    "Ava",
+    "She's eating lunch before her next class."
+)
+ava.set_conversation(
+    "The Computer teacher can't stand clean code."
+)
+canteen.set_character(ava)
+
+# =========================================================
+# EVIL TEACHERS
+# =========================================================
+
+principal = EvilTeacher(
+    "Prin C. Pal",
+    "The terrifying principal."
+)
+principal.set_conversation(
+    "You aren't leaving this school so easily..."
+)
+principal.set_weakness("school key")
 principal_office.set_character(principal)
 
-# Evil Math Teacher 
-evil_math = EvilTeacher("Mr. Algebra", "A furious math teacher.")
-evil_math.set_conversation("Your equations are WRONG!")
+
+evil_math = EvilTeacher(
+    "Mr Algebra",
+    "A furious maths teacher covered in equations."
+)
+evil_math.set_conversation(
+    "Show me your working!"
+)
 evil_math.set_weakness("calculator")
 math_classroom.set_character(evil_math)
 
-# English Wing (ALL evil)
-evil_english1 = EvilTeacher("Ms. Grammar", "She corrects your speech aggressively.")
-evil_english1.set_conversation("Your grammar is atrocious!")
-evil_english1.set_weakness("dictionary")
-english_classroom.set_character(evil_english1)
 
-# Computer Lab (evil)
-evil_computer = EvilTeacher("Mr. Brooks", "He throws keyboards at you.")
-evil_computer.set_conversation("Your code is full of bugs!")
+evil_english = EvilTeacher(
+    "Ms Grammar",
+    "She corrects every sentence you say."
+)
+evil_english.set_conversation(
+    "Your grammar is atrocious!"
+)
+evil_english.set_weakness("dictionary")
+english_office.set_character(evil_english)
+
+
+evil_computer = EvilTeacher(
+    "Mr Brooks",
+    "He throws keyboards when code doesn't compile."
+)
+evil_computer.set_conversation(
+    "Your code has bugs!"
+)
 evil_computer.set_weakness("pylint")
 computer_lab.set_character(evil_computer)
 
-# Science Wing (normal)
-science_teacher = EvilTeacher("Dr. Atom", "A calm science teacher.")
-science_teacher.set_conversation("I will split YOUR atoms!")
-science_teacher.set_weakness("fantasy book")
-physics.set_character(science_teacher)
 
-# ---------------------------------------------------------
-# STARTING ROOM
-# ---------------------------------------------------------
+evil_science = EvilTeacher(
+    "Dr Atom",
+    "A science teacher with dangerous experiments."
+)
+evil_science.set_conversation(
+    "Prepare for explosive chemistry!"
+)
+evil_science.set_weakness("fantasy book")
+physics.set_character(evil_science)
+
+# =========================================================
+# PLAYER
+# =========================================================
+
+player = Student(
+    "Shivansh",
+    "A stressed Year 11 student trying to escape school."
+)
 
 current_cave = entrance
 
+# =========================================================
+# NAVIGATION
+# =========================================================
 
-# Navigation
 valid_directions = [
-    "north", "south", "east", "west",
-    "northeast", "northwest",
-    "southeast", "southwest"
+    "north",
+    "south",
+    "east",
+    "west",
+    "northeast",
+    "northwest",
+    "southeast",
+    "southwest"
 ]
 
 direction_aliases = {
@@ -273,6 +443,23 @@ direction_aliases = {
     "sw": "southwest"
 }
 
+# =========================================================
+# GAME INTRODUCTION
+# =========================================================
+
+print("=" * 55)
+print("      ESCAPE FROM QUAKERS HILL HIGH SCHOOL")
+print("=" * 55)
+print("Collect items, defeat evil teachers,")
+print("and escape through the exit!")
+print()
+print("Type 'help' to see the available commands.")
+print("=" * 55)
+
+# =========================================================
+# MAIN GAME LOOP
+# =========================================================
+
 while not dead:
 
     print()
@@ -283,45 +470,180 @@ while not dead:
     if inhabitant:
         inhabitant.describe()
 
-    command = input("> ").lower()
+    command = input("\n> ").lower().strip()
+
+    # ----------------------------
+    # Direction shortcuts
+    # ----------------------------
 
     if command in direction_aliases:
         command = direction_aliases[command]
 
+    # ----------------------------
+    # Movement
+    # ----------------------------
+
     if command in valid_directions:
         current_cave = current_cave.move(command)
 
+    # ----------------------------
+    # Talk
+    # ----------------------------
+
     elif command == "talk":
+
         if inhabitant:
+
             inhabitant.talk()
-    
+
+            # Ryan gives calculator
+            if inhabitant == ryan:
+
+                if not player.has_item("calculator"):
+
+                    print("Ryan gives you his calculator.")
+                    player.add_item(calculator)
+
+            # Emily gives fantasy book hint
+
+            elif inhabitant == emily:
+
+                print("Emily smiles.")
+                print("'The Biology lab has something useful.'")
+
+            # Liam gives dictionary
+
+            elif inhabitant == liam:
+
+                if not player.has_item("dictionary"):
+
+                    print("Liam hands you a dictionary.")
+                    player.add_item(dictionary)
+
         else:
             print("There is nobody here.")
-    
+
+    # ----------------------------
+    # Take item
+    # ----------------------------
+
+    elif command == "take":
+
+        item = current_cave.get_item()
+
+        if item:
+
+            player.add_item(item)
+            current_cave.set_item(None)
+
+        else:
+
+            print("There is nothing to take.")
+
+    # ----------------------------
+    # Inventory
+    # ----------------------------
+
     elif command == "inventory":
+
         player.show_inventory()
 
+    # ----------------------------
+    # Study
+    # ----------------------------
+
+    elif command == "study":
+
+        player.study()
+
+    # ----------------------------
+    # Fight
+    # ----------------------------
+
     elif command == "fight":
-        if inhabitant and isinstance(inhabitant, EvilTeacher):
+
+        if inhabitant and isinstance(inhabitant, Teacher):
+
             fight_with = input("Fight with: ").lower()
 
             if not player.has_item(fight_with):
-                print("You don't have that item!")
+
+                print("You don't have that item.")
+
             elif inhabitant.fight(fight_with):
-                print("You won!")
+
+                print("You defeated", inhabitant.name)
+
                 current_cave.set_character(None)
+
+                if inhabitant == principal:
+
+                    print()
+                    print("Congratulations!")
+                    print("You defeated the Principal.")
+                    print("You escaped Quakers Hill High School!")
+                    dead = True
+
             else:
-                print("Game over")
+
+                print()
+                print("GAME OVER")
                 dead = True
 
         else:
+
             print("There is nobody to fight.")
 
-    else: 
-        print("Invalid Command.")
-    
+    # ----------------------------
+    # Help
+    # ----------------------------
 
+    elif command == "help":
 
+        print("""
+================ COMMANDS ================
 
+Movement
+--------
+north
+south
+east
+west
+northeast
+northwest
+southeast
+southwest
 
+or
 
+n s e w ne nw se sw
+
+Actions
+-------
+talk
+fight
+take
+inventory
+study
+help
+quit
+
+==========================================
+""")
+
+    # ----------------------------
+    # Quit
+    # ----------------------------
+
+    elif command == "quit":
+
+        print("Goodbye!")
+        dead = True
+
+    # ----------------------------
+    # Invalid command
+    # ----------------------------
+
+    else:
+
+        print("Invalid command.")
