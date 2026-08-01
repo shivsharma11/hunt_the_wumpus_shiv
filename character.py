@@ -76,15 +76,18 @@ class Student(Character):
 
     def show_inventory(self):
 
-        print("\nInventory")
-        print("---------")
+        print("\n" + "=" * 35)
+        print("inventory")
+        print("=" * 35)
 
         if len(self.inventory) == 0:
-            print("Empty")
+
+            print("empty")
             return
 
-        for item in self.inventory:
-            print("-", item.get_name())
+        for i, item in enumerate(self.inventory, start=1):
+            #use loop to iterete (correct spelling trust) through the arrays
+            print(f"{i}. {item.get_name()}")
 
     # ---------------- Study ----------------
 

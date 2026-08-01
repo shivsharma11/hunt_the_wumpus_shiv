@@ -15,17 +15,29 @@ class Classroom:
 
     def describe(self):
 
-        print("\nYou are in:", self.name)
+        print("\n" + "=" * 50)
+        print("location:", self.name.lower())
+        print("=" * 50)
+
         print(self.description)
 
-        if self.item:
-            print("\nItem:")
-            print("-", self.item.get_name())
+        if self.character:
 
-        print("\nExits:")
+          print("\nperson")
+          print("------")
+          print(self.character.name)
+
+        if self.item:
+
+            print("\nitem")
+            print("----")
+            print(self.item.get_name())
+
+            print("\nexits")
+            print("-----")
 
         for direction in self.linked_classrooms:
-            print("-", direction)
+            print(direction)
 
     def set_link_classroom(self, classroom, direction):
         self.linked_classrooms[direction] = classroom
