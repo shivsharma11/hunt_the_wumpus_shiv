@@ -2,11 +2,106 @@
 # imports
 # =========================================================
 
+import os
+import time
+
 from character import Character, Student, Teacher, EvilTeacher
 from cave import Classroom
 from item import Item
 
 dead = False
+
+# =========================================================
+# helper functions
+# =========================================================
+
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+def ascii_loading(message="loading"):
+    print()
+    print(message, end="", flush=True)
+    for dot in "...":
+        time.sleep(0.3)
+        print(dot, end="", flush=True)
+    print()
+
+
+def ascii_detention():
+    clear_screen()
+    print("\n" + "=" * 40)
+    print("   YOU HAVE BEEN SENT TO DETENTION")
+    print("=" * 40)
+    print(r"""
+   ________________________
+  |                        |
+  |        DETENTION       |
+  |________________________|
+    """)
+    ascii_loading("serving your time")
+    # 60-second punishment
+    for i in range(5, 0, -1):
+        print(f"\nyou will be released in {i * 12} seconds...")
+        time.sleep(12)
+    print("\n...time served. you may return to class.")
+
+
+def ascii_victory():
+    print("\n" + "=" * 40)
+    print("          VICTORY!")
+    print("=" * 40)
+    print(r"""
+      \o/   \o/   \o/
+       |     |     |
+      / \   / \   / \
+    """)
+    ascii_loading("celebrating")
+
+
+# display all available commands
+def show_commands():
+
+    print("\n" + "=" * 50)
+    print("available commands")
+    print("=" * 50)
+
+    print("\nmovement")
+    print("--------")
+    print("north south east west")
+    print("northeast northwest southeast southwest")
+    print("or")
+    print("n s e w ne nw se sw")
+
+    print("\nactions")
+    print("-------")
+    print("talk")
+    print("fight")
+    print("take")
+    print("inventory")
+    print("study")
+    print("look")
+    print("help")
+    print("quit")
+
+
+# display a simple welcome screen
+def introduction():
+
+    clear_screen()
+    print("=" * 60)
+    print("      escape from quakers hill high school")
+    print("=" * 60)
+    print()
+    print("your goal is to escape the school.")
+    print("collect useful items.")
+    print("defeat the evil teachers.")
+    print("finally defeat the principal.")
+    print()
+    print("good luck!")
+    print("=" * 60)
+    ascii_loading("entering the school")
+
 
 # =========================================================
 # create all of the items
@@ -83,13 +178,9 @@ pe2 = Classroom("PE 2")
 # =========================================================
 
 canteen.set_item(calculator)
-
 library.set_item(dictionary)
-
 biology.set_item(fantasy_book)
-
 computer_lab.set_item(pylint)
-
 principal_office.set_item(school_key)
 
 # =========================================================
@@ -145,7 +236,7 @@ exit_room.set_description(
 )
 
 cafe.set_description(
-    "A small café where students buy snacks."
+    "A small cafe where students buy snacks."
 )
 
 canteen.set_description(
@@ -370,8 +461,6 @@ exit_room.set_link_classroom(hall9, "east")
 # create friendly students
 # =========================================================
 
-# these students give hints about where useful items are
-
 ryan = Character(
     "Ryan",
     "A tired Year 11 student carrying several maths textbooks."
@@ -515,8 +604,6 @@ player = Student(
     "A stressed Year 11 student trying to escape school."
 )
 
-# the player starts at the entrance
-
 current_cave = entrance
 
 # =========================================================
@@ -549,469 +636,9 @@ direction_aliases = {
 }
 
 # =========================================================
-# welcome message
-# =========================================================
-
-print("=" * 55)
-print("          escape from quakers hill high")
-print("=" * 55)
-print()
-print("collect useful items around the school.")
-print("defeat every evil teacher.")
-print("beat the principal.")
-print("escape through the exit.")
-print()
-print("type 'help' if you get stuck.")
-print("=" * 55)
-
-# =========================================================
-# main game loop
-# =========================================================
-
-while not dead:
-
-    print()
-    current_cave.describe()
-
-    inhabitant = current_cave.get_character()
-
-    # -----------------------------------------------------
-    # if there is a character in the room
-    # -----------------------------------------------------
-
-    if inhabitant:
-
-        print()
-        inhabitant.describe()
-
-        # automatically interact with teachers
-
-        if isinstance(inhabitant, Teacher):
-
-            print("\n" + "=" * 50)
-            print("you have encountered", inhabitant.name + "!")
-            print("=" * 50)
-
-            inhabitant.talk()
-
-            teacher_defeated = False
-
-            while not teacher_defeated and not dead:
-
-                print("\ncommands")
-                print("fight")
-                print("run")
-
-                action = input("> ").strip().lower()
-
-                # ---------------- fight ----------------
-
-                if action == "fight":
-
-                    player.show_inventory()
-
-                    fight_with = input(
-                        "\nwhat item will you use? "
-                    ).strip().lower()
-
-                    if not player.has_item(fight_with):
-
-                        print("\nyou don't have that item.")
-
-                    elif inhabitant.fight(fight_with):
-
-                        print("\nyou defeated", inhabitant.name)
-
-                        current_cave.set_character(None)
-                        inhabitant = None
-
-                        teacher_defeated = True
-
-                        # if the principal is defeated,
-                        # unlock the exit
-
-                        if inhabitant == principal:
-
-                            print()
-                            print("the principal drops the exit key!")
-
-                    else:
-
-                        print()
-                        print("you were defeated.")
-                        print("game over.")
-
-                        dead = True
-
-                # ---------------- run ----------------
-
-                elif action == "run":
-
-                    print(
-                        "\nyou quickly leave before the teacher catches you."
-                    )
-
-                    teacher_defeated = True
-
-                else:
-
-                    print("invalid command.")
-
-        else:
-
-            print("\ncommands")
-            print("talk")
-            print("move")
-            print("take")
-            print("inventory")
-            print("study")
-            print("help")
-            print("quit")
-
-    # -----------------------------------------------------
-    # no character in the room
-    # -----------------------------------------------------
-
-    else:
-
-        print("\ncommands")
-        print("move")
-        print("take")
-        print("inventory")
-        print("study")
-        print("look")
-        print("help")
-        print("quit")
-
-    # -----------------------------------------------------
-    # get player command
-    # -----------------------------------------------------
-
-    command = input("\n> ").strip().lower()
-
-    # allow movement shortcuts
-
-    if command in direction_aliases:
-        command = direction_aliases[command]
-
-    # allow "go north" or "move north"
-
-    words = command.split()
-
-    if len(words) == 2:
-
-        if words[0] in ["go", "move", "walk"]:
-
-            command = words[1]
-
-    # -----------------------------------------------------
-    # movement
-    # -----------------------------------------------------
-
-    if command in valid_directions:
-
-        current_cave = current_cave.move(command)
-
-    # -----------------------------------------------------
-    # talk
-    # -----------------------------------------------------
-
-    elif command == "talk":
-
-        if inhabitant:
-
-            inhabitant.talk()
-
-        else:
-
-            print("there is nobody here.")
-
-    # -----------------------------------------------------
-    # take item
-    # -----------------------------------------------------
-
-    elif command == "take":
-
-        item = current_cave.get_item()
-
-        if item:
-
-            player.add_item(item)
-
-            current_cave.set_item(None)
-
-        else:
-
-            print("there is nothing to take.")
-
-    # -----------------------------------------------------
-    # inventory
-    # -----------------------------------------------------
-
-    elif command == "inventory":
-
-        player.show_inventory()
-
-    # -----------------------------------------------------
-    # study
-    # -----------------------------------------------------
-
-    elif command == "study":
-
-        player.study()
-
-    # -----------------------------------------------------
-    # look around
-    # -----------------------------------------------------
-
-    elif command == "look":
-
-        current_cave.describe()
-
-        if current_cave.get_character():
-
-            current_cave.get_character().describe()
-
-    # -----------------------------------------------------
-    # help
-    # -----------------------------------------------------
-
-    elif command == "help":
-
-        print("""
-================== commands ==================
-
-movement
---------
-north
-south
-east
-west
-northeast
-northwest
-southeast
-southwest
-
-shortcuts
----------
-n
-s
-e
-w
-ne
-nw
-se
-sw
-
-you can also type:
-go north
-move west
-walk east
-
-actions
--------
-talk
-take
-inventory
-study
-look
-help
-quit
-
-==============================================
-""")
-
-    # -----------------------------------------------------
-    # quit game
-    # -----------------------------------------------------
-
-    elif command == "quit":
-
-        print("thanks for playing!")
-
-        dead = True
-
-    # -----------------------------------------------------
-    # invalid command
-    # -----------------------------------------------------
-
-    else:
-
-        print("invalid command.")
-
-# -----------------------------------------------------
-# automatically interact with teachers
-# -----------------------------------------------------
-
-if isinstance(inhabitant, Teacher):
-
-    print("\n" + "=" * 50)
-    print("you encountered", inhabitant.name + "!")
-    print("=" * 50)
-
-    inhabitant.talk()
-
-    player_health = 3
-    attempts = 0
-
-    while True:
-
-        print("\nhealth:", "❤️" * player_health)
-
-        print("\ncommands")
-        print("- fight")
-        print("- run")
-        print("- inventory")
-
-        action = input("> ").strip().lower()
-
-        # ---------------- inventory ----------------
-
-        if action == "inventory":
-
-            player.show_inventory()
-
-        # ---------------- run ----------------
-
-        elif action == "run":
-
-            print("you escaped!")
-
-            break
-
-        # ---------------- fight ----------------
-
-        elif action == "fight":
-
-            player.show_inventory()
-
-            weapon = input(
-                "\nwhat will you use? "
-            ).strip().lower()
-
-            if not player.has_item(weapon):
-
-                print("\nyou don't own that item.")
-                continue
-
-            if inhabitant.fight(weapon):
-
-                print("\nyou defeated", inhabitant.name)
-
-                current_cave.set_character(None)
-
-                if inhabitant == principal:
-
-                    print()
-                    print("you defeated the principal!")
-                    print("you escaped quakers hill high!")
-                    dead = True
-
-                break
-
-            attempts += 1
-            player_health -= 1
-
-            print("\nthat didn't work!")
-
-            if attempts == 2:
-
-                print()
-                print(
-                    inhabitant.name,
-                    "laughs."
-                )
-
-                print(
-                    "'maybe try something related to'",
-                    inhabitant.get_weakness() + "...'"
-                )
-
-            if player_health <= 0:
-
-                print()
-                print("you were defeated.")
-                print("game over.")
-
-                dead = True
-                break
-
-        else:
-
-            print("invalid command.")
-
-elif command.startswith("examine"):
-
-    words = command.split(maxsplit=1)
-
-    if len(words) < 2:
-
-        print("examine what?")
-
-    else:
-
-        name = words[1]
-
-        found = False
-
-        for item in player.inventory:
-
-            if item.get_name().lower() == name:
-
-                item.describe()
-                found = True
-                break
-
-        if not found:
-
-            print("you don't have that item.")
-
-# =========================================================
-# helper functions
-# =========================================================
-
-# display all available commands
-def show_commands():
-
-    print("\n" + "=" * 50)
-    print("available commands")
-    print("=" * 50)
-
-    print("\nmovement")
-    print("--------")
-    print("north south east west")
-    print("northeast northwest southeast southwest")
-    print("or")
-    print("n s e w ne nw se sw")
-
-    print("\nactions")
-    print("-------")
-    print("talk")
-    print("take")
-    print("inventory")
-    print("study")
-    print("look")
-    print("help")
-    print("quit")
-
-
-# display a simple welcome screen
-def introduction():
-
-    print("=" * 60)
-    print("      escape from quakers hill high school")
-    print("=" * 60)
-    print()
-    print("your goal is to escape the school.")
-    print("collect useful items.")
-    print("defeat the evil teachers.")
-    print("finally defeat the principal.")
-    print()
-    print("good luck!")
-    print("=" * 60)
-
-
 # start the game
+# =========================================================
+
 introduction()
 
 # =========================================================
@@ -1020,19 +647,14 @@ introduction()
 
 while not dead:
 
+    clear_screen()
     print()
-
     current_cave.describe()
 
     inhabitant = current_cave.get_character()
 
-    # show the character if there is one
-
     if inhabitant:
-
         inhabitant.describe()
-
-    # always show available commands
 
     show_commands()
 
@@ -1041,8 +663,14 @@ while not dead:
     # convert shortcuts into full directions
 
     if command in direction_aliases:
-
         command = direction_aliases[command]
+
+    # allow "go north" or "move north" or "walk north"
+
+    words = command.split()
+
+    if len(words) == 2 and words[0] in ["go", "move", "walk"]:
+        command = words[1]
 
     # --------------------------------------------------
     # movement
@@ -1050,8 +678,8 @@ while not dead:
 
     if command in valid_directions:
 
+        ascii_loading("walking")
         current_cave = current_cave.move(command)
-
         continue
 
     # --------------------------------------------------
@@ -1079,7 +707,6 @@ while not dead:
         if item:
 
             player.add_item(item)
-
             current_cave.set_item(None)
 
         else:
@@ -1123,6 +750,7 @@ while not dead:
         if inhabitant and isinstance(inhabitant, Teacher):
 
             print("\nprepare for battle!")
+            ascii_loading("getting ready")
 
             player.show_inventory()
 
@@ -1135,12 +763,16 @@ while not dead:
             if not player.has_item(fight_with):
 
                 print("\nyou don't have that item!")
+                print("the teacher sends you to detention for a minute!")
+                ascii_detention()
+                current_cave = detention
 
             else:
 
                 if inhabitant.fight(fight_with):
 
                     print("\nyou defeated", inhabitant.name + "!")
+                    ascii_victory()
 
                     # remove the teacher after defeating them
 
@@ -1160,10 +792,10 @@ while not dead:
 
                 else:
 
-                    print("\nyou were defeated...")
-                    print("game over.")
-
-                    dead = True
+                    print("\nthat was the wrong item!")
+                    print("the teacher sends you to detention for a minute!")
+                    ascii_detention()
+                    current_cave = detention
 
         else:
 
@@ -1219,7 +851,6 @@ while not dead:
         if answer == "y":
 
             print("\nthanks for playing!")
-
             dead = True
 
     # --------------------------------------------------
@@ -1235,9 +866,5 @@ while not dead:
 # =========================================================
 
 print("\n" + "=" * 50)
-
-if dead:
-
-    print("game ended.")
-
+print("game ended.")
 print("=" * 50)
