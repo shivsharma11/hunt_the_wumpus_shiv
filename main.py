@@ -4,10 +4,13 @@
 
 import os
 import time
+from colorama import init, Fore, Style
 
 from character import Character, Student, Teacher, EvilTeacher
 from cave import Classroom
 from item import Item
+
+init(autoreset=True)
 
 dead = False
 
@@ -20,38 +23,56 @@ def clear_screen():
 
 
 def ascii_loading(message="loading"):
-    print()
-    print(message, end="", flush=True)
+    print(Fore.CYAN + "\n" + message, end="", flush=True)
     for dot in "...":
-        time.sleep(0.3)
+        time.sleep(0.25)
         print(dot, end="", flush=True)
     print()
 
 
+def ascii_title():
+    clear_screen()
+    print(Fore.YELLOW + "=" * 60)
+    print(Fore.GREEN + "      ESCAPE FROM QUAKERS HILL HIGH SCHOOL")
+    print(Fore.YELLOW + "=" * 60)
+    print(Fore.MAGENTA + r"""
+  ░██████████   ░██████     ░██████     ░███    ░█████████  ░██████████    
+░██          ░██   ░██   ░██   ░██   ░██░██   ░██     ░██ ░██            
+░██         ░██         ░██         ░██  ░██  ░██     ░██ ░██            
+░█████████   ░████████  ░██        ░█████████ ░█████████  ░█████████     
+░██                 ░██ ░██        ░██    ░██ ░██         ░██            
+░██          ░██   ░██   ░██   ░██ ░██    ░██ ░██         ░██            
+░██████████   ░██████     ░██████  ░██    ░██ ░██         ░██████████    
+                                                                         
+                                                                         
+                                                                         
+    """)
+    ascii_loading("entering the school")
+
+
 def ascii_detention():
     clear_screen()
-    print("\n" + "=" * 40)
+    print(Fore.RED + "\n" + "=" * 40)
     print("   YOU HAVE BEEN SENT TO DETENTION")
     print("=" * 40)
-    print(r"""
+    print(Fore.RED + r"""
    ________________________
   |                        |
   |        DETENTION       |
   |________________________|
     """)
     ascii_loading("serving your time")
-    # 60-second punishment
     for i in range(5, 0, -1):
-        print(f"\nyou will be released in {i * 12} seconds...")
-        time.sleep(12)
-    print("\n...time served. you may return to class.")
+        print(Fore.YELLOW + f"\nyou will be released in {i} seconds...")
+        time.sleep(1)
+    print(Fore.GREEN + "\n...time served. you may return to class.")
 
 
 def ascii_victory():
-    print("\n" + "=" * 40)
+    print(Fore.GREEN + "\n" + "=" * 40)
     print("          VICTORY!")
     print("=" * 40)
-    print(r"""
+    print(Fore.GREEN + r"""
       \o/   \o/   \o/
        |     |     |
       / \   / \   / \
@@ -59,21 +80,32 @@ def ascii_victory():
     ascii_loading("celebrating")
 
 
+def ascii_fight_intro():
+    print(Fore.RED + r"""
+                                                                  
+                                                            ▄▄ 
+████▄     ████▄    ▄██     ██████ ██  ▄████  ██  ██ ██████  ██ 
+ ▄▄██      ▄██▀     ██     ██▄▄   ██ ██  ▄▄▄ ██████   ██    ██ 
+▄▄▄█▀ ▄ ▄ ███▄▄ ▄ ▄ ██ ▄ ▄ ██     ██  ▀███▀  ██  ██   ██    ▄▄ 
+                                                               
+    """)
+
+
 # display all available commands
 def show_commands():
 
-    print("\n" + "=" * 50)
+    print(Fore.YELLOW + "\n" + "=" * 50)
     print("available commands")
     print("=" * 50)
 
-    print("\nmovement")
+    print(Fore.CYAN + "\nmovement")
     print("--------")
     print("north south east west")
     print("northeast northwest southeast southwest")
     print("or")
     print("n s e w ne nw se sw")
 
-    print("\nactions")
+    print(Fore.CYAN + "\nactions")
     print("-------")
     print("talk")
     print("fight")
@@ -87,21 +119,7 @@ def show_commands():
 
 # display a simple welcome screen
 def introduction():
-
-    clear_screen()
-    print("=" * 60)
-    print("      escape from quakers hill high school")
-    print("=" * 60)
-    print()
-    print("your goal is to escape the school.")
-    print("collect useful items.")
-    print("defeat the evil teachers.")
-    print("finally defeat the principal.")
-    print()
-    print("good luck!")
-    print("=" * 60)
-    ascii_loading("entering the school")
-
+    ascii_title()
 
 # =========================================================
 # create all of the items
@@ -467,8 +485,9 @@ ryan = Character(
 )
 
 ryan.set_conversation(
-    "I heard Mr Algebra is terrified of calculators. "
-    "You might find one somewhere near the canteen."
+    "Bro I’ve been doing maths since 7am...\n"
+    "Daghel is actually scared of calculators.\n"
+    "If you’re gonna fight him, make sure you’ve got one."
 )
 
 hall3.set_character(ryan)
@@ -480,8 +499,9 @@ liam = Character(
 )
 
 liam.set_conversation(
-    "Ms Grammar absolutely hates dictionaries. "
-    "I think I saw one in the library."
+    "ANTHONY JAMES PECORA can smell incorrect punctuation.\n"
+    "He screams marks at people.\n"
+    "If you bring a dictionary, he might short-circuit."
 )
 
 hall2.set_character(liam)
@@ -493,7 +513,8 @@ emily = Character(
 )
 
 emily.set_conversation(
-    "I accidentally left my favourite fantasy book in the Biology lab."
+    "I accidentally left my favourite fantasy book in the Biology lab.\n"
+    "Maharaj hates imagination — maybe it’ll confuse him."
 )
 
 library.set_character(emily)
@@ -505,7 +526,8 @@ ava = Character(
 )
 
 ava.set_conversation(
-    "Mr Brooks always complains when students don't use pylint."
+    "Mr Brooks is allergic to bad code.\n"
+    "If you bring pylint, he’ll probably explode."
 )
 
 canteen.set_character(ava)
@@ -517,7 +539,9 @@ ethan = Character(
 )
 
 ethan.set_conversation(
-    "The Principal never lets anyone leave without challenging them."
+    "You’re nearly at the principal.\n"
+    "He won’t let you leave unless you prove yourself.\n"
+    "Rumour says a key unlocks his weakness."
 )
 
 hall8.set_character(ethan)
@@ -526,69 +550,88 @@ hall8.set_character(ethan)
 # create the evil teachers
 # =========================================================
 
+# Daghel - Maths
 evil_math = EvilTeacher(
-    "Mr Algebra",
+    "Daghel",
     "The terrifying maths teacher."
 )
 
 evil_math.set_conversation(
-    "Show me your working!"
+    "Show me your working… NOW."
 )
 
 evil_math.set_weakness("calculator")
 
 math_classroom.set_character(evil_math)
 
-
+# ANTHONY JAMES PECORA - English
 evil_english = EvilTeacher(
-    "Ms Grammar",
-    "She corrects every sentence you say."
+    "ANTHONY JAMES PECORA",
+    "He corrects every sentence you say."
 )
 
 evil_english.set_conversation(
-    "Your grammar is unacceptable!"
+    "TWENTY ONE OUT OF THIRTY!!!\n"
+    "YOUR ESSAY IS A DISGRACE!!!"
 )
 
 evil_english.set_weakness("dictionary")
 
 english_office.set_character(evil_english)
 
-
-evil_science = EvilTeacher(
-    "Dr Atom",
+# Maharaj - Chemistry
+evil_chem = EvilTeacher(
+    "Maharaj",
     "He enjoys dangerous chemistry experiments."
 )
 
-evil_science.set_conversation(
-    "Prepare for explosive science!"
+evil_chem.set_conversation(
+    "Prepare for explosive science, my friend."
 )
 
-evil_science.set_weakness("fantasy book")
+evil_chem.set_weakness("fantasy book")
 
-physics.set_character(evil_science)
+chemistry.set_character(evil_chem)
 
+# Dr Kumar - Physics
+evil_physics = EvilTeacher(
+    "Dr Kumar",
+    "The physics master who sees all."
+)
 
+evil_physics.set_conversation(
+    "You think you understand motion? You understand NOTHING."
+)
+
+evil_physics.set_weakness("fantasy book")
+
+physics.set_character(evil_physics)
+
+# Mr Brooks - Computer
 evil_computer = EvilTeacher(
     "Mr Brooks",
     "He can spot bugs in code instantly."
 )
 
 evil_computer.set_conversation(
-    "Your code won't even compile!"
+    "Your code won't even compile!\n"
+    "Did you seriously indent with TABS?"
 )
 
 evil_computer.set_weakness("pylint")
 
 computer_lab.set_character(evil_computer)
 
-
+# Principal
 principal = EvilTeacher(
     "Prin C. Pal",
     "The Principal himself."
 )
 
 principal.set_conversation(
-    "So... you've made it this far."
+    "So... you've made it this far.\n"
+    "Most students don’t even survive Year 9.\n"
+    "Show me you’re worthy of freedom."
 )
 
 principal.set_weakness("school key")
@@ -658,7 +701,7 @@ while not dead:
 
     show_commands()
 
-    command = input("\n> ").strip().lower()
+    command = input(Fore.YELLOW + "\n> ").strip().lower()
 
     # convert shortcuts into full directions
 
@@ -689,12 +732,12 @@ while not dead:
     elif command == "talk":
 
         if inhabitant:
-
+            print(Fore.GREEN)
             inhabitant.talk()
-
+            input(Fore.CYAN + "\n(press ENTER to continue)")
         else:
-
-            print("there is nobody here.")
+            print(Fore.RED + "there is nobody here.")
+            input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
     # take an item
@@ -706,12 +749,15 @@ while not dead:
 
         if item:
 
+            print(Fore.GREEN + f"\nyou picked up {item.name}!")
             player.add_item(item)
             current_cave.set_item(None)
 
         else:
 
-            print("there is nothing here.")
+            print(Fore.RED + "there is nothing here.")
+
+        input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
     # show inventory
@@ -719,7 +765,9 @@ while not dead:
 
     elif command == "inventory":
 
+        print(Fore.GREEN)
         player.show_inventory()
+        input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
     # study
@@ -727,7 +775,9 @@ while not dead:
 
     elif command == "study":
 
+        print(Fore.GREEN)
         player.study()
+        input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
     # look around the room again
@@ -735,11 +785,16 @@ while not dead:
 
     elif command == "look":
 
+        clear_screen()
+        print()
         current_cave.describe()
 
-        if inhabitant:
+        inhabitant = current_cave.get_character()
 
+        if inhabitant:
             inhabitant.describe()
+
+        input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
     # fight
@@ -749,21 +804,23 @@ while not dead:
 
         if inhabitant and isinstance(inhabitant, Teacher):
 
-            print("\nprepare for battle!")
+            ascii_fight_intro()
+            print(Fore.RED + "\nprepare for battle!")
             ascii_loading("getting ready")
 
+            print(Fore.GREEN)
             player.show_inventory()
 
             fight_with = input(
-                "\nwhat will you fight with? "
+                Fore.YELLOW + "\nwhat will you fight with? "
             ).strip().lower()
 
             # make sure the player actually has the item
 
             if not player.has_item(fight_with):
 
-                print("\nyou don't have that item!")
-                print("the teacher sends you to detention for a minute!")
+                print(Fore.RED + "\nyou don't have that item!")
+                print(Fore.RED + "the teacher sends you to detention for a minute!")
                 ascii_detention()
                 current_cave = detention
 
@@ -771,7 +828,7 @@ while not dead:
 
                 if inhabitant.fight(fight_with):
 
-                    print("\nyou defeated", inhabitant.name + "!")
+                    print(Fore.GREEN + f"\nyou defeated {inhabitant.name}!")
                     ascii_victory()
 
                     # remove the teacher after defeating them
@@ -782,7 +839,7 @@ while not dead:
 
                     if inhabitant == principal:
 
-                        print("\n" + "=" * 50)
+                        print(Fore.GREEN + "\n" + "=" * 50)
                         print("congratulations!")
                         print("you defeated the principal!")
                         print("you escaped quakers hill high!")
@@ -790,16 +847,20 @@ while not dead:
 
                         dead = True
 
+                    else:
+                        input(Fore.CYAN + "\n(press ENTER to continue)")
+
                 else:
 
-                    print("\nthat was the wrong item!")
-                    print("the teacher sends you to detention for a minute!")
+                    print(Fore.RED + "\nthat was the wrong item!")
+                    print(Fore.RED + "the teacher sends you to detention for a minute!")
                     ascii_detention()
                     current_cave = detention
 
         else:
 
-            print("there is nobody here to fight.")
+            print(Fore.RED + "there is nobody here to fight.")
+            input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
     # help menu
@@ -807,11 +868,11 @@ while not dead:
 
     elif command == "help":
 
-        print("\n" + "=" * 50)
+        print(Fore.YELLOW + "\n" + "=" * 50)
         print("help menu")
         print("=" * 50)
 
-        print("\nmovement")
+        print(Fore.CYAN + "\nmovement")
         print("north")
         print("south")
         print("east")
@@ -821,10 +882,10 @@ while not dead:
         print("southeast")
         print("southwest")
 
-        print("\nshortcuts")
+        print(Fore.CYAN + "\nshortcuts")
         print("n s e w ne nw se sw")
 
-        print("\nactions")
+        print(Fore.CYAN + "\nactions")
         print("talk")
         print("fight")
         print("take")
@@ -834,9 +895,11 @@ while not dead:
         print("help")
         print("quit")
 
-        print("\ngoal")
+        print(Fore.CYAN + "\ngoal")
         print("collect useful items and defeat every teacher.")
         print("finally defeat the principal to escape.")
+
+        input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
     # quit the game
@@ -845,13 +908,18 @@ while not dead:
     elif command == "quit":
 
         answer = input(
-            "are you sure you want to quit? (y/n): "
+            Fore.YELLOW + "are you sure you want to quit? (y/n): "
         ).lower()
 
         if answer == "y":
 
-            print("\nthanks for playing!")
+            print(Fore.GREEN + "\nthanks for playing!")
             dead = True
+
+        else:
+
+            print(Fore.CYAN + "\nok, keep going!")
+            time.sleep(1)
 
     # --------------------------------------------------
     # invalid command
@@ -859,12 +927,13 @@ while not dead:
 
     else:
 
-        print("invalid command.")
+        print(Fore.RED + "invalid command.")
+        input(Fore.CYAN + "\n(press ENTER to continue)")
 
 # =========================================================
 # end of game
 # =========================================================
 
-print("\n" + "=" * 50)
+print(Fore.YELLOW + "\n" + "=" * 50)
 print("game ended.")
 print("=" * 50)
