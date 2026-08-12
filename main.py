@@ -44,8 +44,7 @@ def ascii_title():
 ░██          ░██   ░██   ░██   ░██ ░██    ░██ ░██         ░██            
 ░██████████   ░██████     ░██████  ░██    ░██ ░██         ░██████████    
                                                                          
-                                                                         
-                                                                         
+
     """)
     ascii_loading("entering the school")
 
@@ -85,8 +84,8 @@ def ascii_fight_intro():
                                                                   
                                                             ▄▄ 
 ████▄     ████▄    ▄██     ██████ ██  ▄████  ██  ██ ██████  ██ 
- ▄▄██      ▄██▀     ██     ██▄▄   ██ ██  ▄▄▄ ██████   ██    ██ 
-▄▄▄█▀ ▄ ▄ ███▄▄ ▄ ▄ ██ ▄ ▄ ██     ██  ▀███▀  ██  ██   ██    ▄▄ 
+ ▄▄██      ▄██▀     ██     ██▄▄   ██ ██  ̶̶̶▄▄ ██████   ██    ██ 
+▄▄▄█▀ ▄ ▄ ███▄▄ ▄ ▄ ██ ▄ ▄ ██     ██  ̶̶̶███▀  ██  ██   ██    ̶̶ 
                                                                
     """)
 
@@ -514,7 +513,7 @@ emily = Character(
 
 emily.set_conversation(
     "I accidentally left my favourite fantasy book in the Biology lab.\n"
-    "Maharaj hates imagination — maybe it’ll confuse him."
+    "Maharaj hates imagination — maybe it’ll confuse her."
 )
 
 library.set_character(emily)
@@ -579,10 +578,10 @@ evil_english.set_weakness("dictionary")
 
 english_office.set_character(evil_english)
 
-# Maharaj - Chemistry
+# Maharaj - Chemistry (she)
 evil_chem = EvilTeacher(
     "Maharaj",
-    "He enjoys dangerous chemistry experiments."
+    "She enjoys dangerous chemistry experiments."
 )
 
 evil_chem.set_conversation(
@@ -600,7 +599,7 @@ evil_physics = EvilTeacher(
 )
 
 evil_physics.set_conversation(
-    "You think you understand motion? You understand NOTHING."
+    "IT IS NOT AN EASY SUBJECT."
 )
 
 evil_physics.set_weakness("fantasy book")
@@ -688,9 +687,18 @@ introduction()
 # main game loop
 # =========================================================
 
+# skip_clear controls whether the next loop iteration should skip clearing the screen.
+# When True, the loop will not call clear_screen() so the player can read the previous output.
+skip_clear = False
+
 while not dead:
 
-    clear_screen()
+    if not skip_clear:
+        clear_screen()
+    else:
+        # reset for next iteration so subsequent turns clear normally
+        skip_clear = False
+
     print()
     current_cave.describe()
 
@@ -721,6 +729,8 @@ while not dead:
 
     if command in valid_directions:
 
+        # ensure we clear on movement
+        skip_clear = False
         ascii_loading("walking")
         current_cave = current_cave.move(command)
         continue
@@ -734,9 +744,12 @@ while not dead:
         if inhabitant:
             print(Fore.GREEN)
             inhabitant.talk()
+            # prevent the next loop from clearing immediately so player can read
+            skip_clear = True
             input(Fore.CYAN + "\n(press ENTER to continue)")
         else:
             print(Fore.RED + "there is nobody here.")
+            skip_clear = True
             input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
@@ -757,6 +770,7 @@ while not dead:
 
             print(Fore.RED + "there is nothing here.")
 
+        skip_clear = True
         input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
@@ -767,6 +781,7 @@ while not dead:
 
         print(Fore.GREEN)
         player.show_inventory()
+        skip_clear = True
         input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
@@ -777,6 +792,7 @@ while not dead:
 
         print(Fore.GREEN)
         player.study()
+        skip_clear = True
         input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
@@ -785,6 +801,7 @@ while not dead:
 
     elif command == "look":
 
+        # show the room again but don't clear immediately afterwards
         clear_screen()
         print()
         current_cave.describe()
@@ -794,6 +811,7 @@ while not dead:
         if inhabitant:
             inhabitant.describe()
 
+        skip_clear = True
         input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
@@ -823,6 +841,8 @@ while not dead:
                 print(Fore.RED + "the teacher sends you to detention for a minute!")
                 ascii_detention()
                 current_cave = detention
+                # after detention we want the next loop to clear normally
+                skip_clear = False
 
             else:
 
@@ -848,6 +868,7 @@ while not dead:
                         dead = True
 
                     else:
+                        skip_clear = True
                         input(Fore.CYAN + "\n(press ENTER to continue)")
 
                 else:
@@ -856,10 +877,12 @@ while not dead:
                     print(Fore.RED + "the teacher sends you to detention for a minute!")
                     ascii_detention()
                     current_cave = detention
+                    skip_clear = False
 
         else:
 
             print(Fore.RED + "there is nobody here to fight.")
+            skip_clear = True
             input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
@@ -899,6 +922,7 @@ while not dead:
         print("collect useful items and defeat every teacher.")
         print("finally defeat the principal to escape.")
 
+        skip_clear = True
         input(Fore.CYAN + "\n(press ENTER to continue)")
 
     # --------------------------------------------------
@@ -919,6 +943,7 @@ while not dead:
         else:
 
             print(Fore.CYAN + "\nok, keep going!")
+            skip_clear = True
             time.sleep(1)
 
     # --------------------------------------------------
@@ -928,6 +953,7 @@ while not dead:
     else:
 
         print(Fore.RED + "invalid command.")
+        skip_clear = True
         input(Fore.CYAN + "\n(press ENTER to continue)")
 
 # =========================================================
